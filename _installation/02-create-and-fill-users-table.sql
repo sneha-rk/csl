@@ -17,3 +17,15 @@ CREATE TABLE IF NOT EXISTS `CSL`.`books` (
   PRIMARY KEY (`book_id`),
   FOREIGN KEY (`user_id`) references `users`(`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='book data';
+
+CREATE TABLE IF NOT EXISTS `CSL`.`requests` (
+	`req_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'auto incrementing user_id of each user, unique index',
+	`book_id` int(11) NOT NULL,
+	`owner_id` int(11) NOT NULL references `users`(`user_id`),
+	`user_id` int(11) NOT NULL references `users`(`user_id`),
+	`req_time` TIMESTAMP NOT NULL,
+	`seen` tinyint(1) NOT NULL DEFAULT 0,
+	`accepted` tinyint(1) NOT NULL DEFAULT 0,
+	`accept_time` TIMESTAMP NOT NULL,
+	PRIMARY KEY (`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='request data';

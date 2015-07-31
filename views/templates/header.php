@@ -1,15 +1,7 @@
-<?php 
-    if(isset($_GET['submit'])) {
-        if(isset($_GET['text'])) {
-            $key = $_GET['text'];
-            header('Location: /share.php/?search='.$key);
-        }
-    }
-?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CROWDSOURCED LIBRARY homepage</title>
+    <title>The CrowdSourced Library</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
         .navbar{
@@ -20,10 +12,13 @@
         }
         .navbar-xs .navbar-nav > li > a {  padding-top: 5px; padding-bottom: 5px; line-height: 50px; }
         .input-mysize {   
-           height: 10px;
-           font-size: 10px;
-           line-height: 10px;
+           height: 15px;
+           font-size: 15px;
+           line-height: 15px;
            width: 250px;
+        }
+        .button-mysize {
+            height:34px;
         }
         .white {
             color: gray;
@@ -47,14 +42,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="">CrowdSourced Library</a>
+            <a class="navbar-brand" href="index.php">CrowdSourced Library</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="views/about.php">About</a></li>
-                <!-- <li class="dropdown">
+                <!-- <li><a href="views/about.php">About</a></li>
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Action</a></li>
@@ -85,11 +80,11 @@
                 </li> -->
             </ul>
             <!-- THIS IS THE SEARCH FUNCTION-->
-            <form class="navbar-form navbar-left" role="search" method="GET">
+            <form class="navbar-form navbar-left" action="search.php" role="search" method="GET">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for book..." id="query" name="query" value="">
                     <div class="input-group-btn">
-                    <button type="submit" class="btn btn-1" style="display:hide"><span class="glyphicon glyphicon-search"></span></button>
+                    <button type="submit" class="btn btn-1 button-mysize" style="display:hide"><span class="glyphicon glyphicon-search"></span></button>
                     </div>
                 </div>
             </form>
@@ -98,6 +93,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['user_name'].'<span class="caret"></span>'; ?></a>
                     <ul class="dropdown-menu dropdown-menu1">
                         <li><a href="#">Settings <span class="glyphicon glyphicon-cog pull-right white"></span></a></li>
+                        <li><a href="#">Notifications <span class="glyphicon glyphicon-envelope pull-right white"></span></a></li>
                         <li><a href="index.php?logout">Logout<span class="glyphicon glyphicon-log-out pull-right white"></span></a></li>
                     </ul>
                 </li>

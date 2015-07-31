@@ -89,7 +89,7 @@ if ($login->isUserLoggedIn() != true) {
 <?php include("views/templates/header.php"); ?>
 <div class="wrapper">
 
-    <h1>Slol!</h1>
+    <h1>Thank you for deciding to share a book!</h1>
     <p>Please fill book details and share if and only if you have the book :P</p>
     <br>
 

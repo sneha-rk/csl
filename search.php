@@ -1,4 +1,5 @@
 <?php
+include_once("classes/Login.php");
 $login = new Login();
 
 // ... ask if we are logged in here:
@@ -7,7 +8,6 @@ if ($login->isUserLoggedIn() != true) {
     // for demonstration purposes, we simply show the "you are not logged in" view.
     include("views/not_logged_in.php");
 }
-
 ?>
 <br>
 <!DOCTYPE html>
@@ -38,35 +38,43 @@ if ($login->isUserLoggedIn() != true) {
       </style>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <script >
-      	jQuery(document).ready(function($) {
-		    $(".clickable-row").click(function() {
-		        window.document.location = $(this).data("href");
-		    });
-		});
+        jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.document.location = $(this).data("href");
+        });
+    });
       </script>
   </head>
  <body id="body">
-    <?php include("templates/header.php") ?>
+    <?php include("views/templates/header.php") ?>
     <div class="wrapper">
         <div id="wrappertext">
-        <h2>Welcome, <?php echo $_SESSION['user_name']; ?>!</h2>
-        <br>
-        <button type="button" class="btn btn-success">Share a book and help us grow!</button>
+        <h2>Search result(s) for <?php echo $_GET['query']; ?></h2>
         <br>
         <br>
         <div class="list-group">
         <table class="table table-hover">
-        		<caption>Recently added books</caption>
 			    <tbody>
-			      	<?php	include_once("templates/db_conx.php");
-						$sql_temp = "SELECT book_id, book_name, author_name FROM books WHERE available = 1 LIMIT 20";
-					    $result = mysqli_query($db_conx, $sql_temp);
+			      	<?php	
+              if(isset($_GET['query'])) {
+                  $query = $_GET['query'];
+                  $query = strtolower($query);
+                  include_once("views/templates/db_conx.php");
+    						  $sql_temp = "SELECT book_id, book_name, author_name, available FROM books WHERE NOT(user_id = ".$_SESSION['user_id'].") AND (LOWER(book_name) LIKE '%".$query."%' OR LOWER(author_name) LIKE '%".$query."%')";
+    					    $result = mysqli_query($db_conx, $sql_temp);
 
-					    while ($row=mysqli_fetch_row($result))
-					    {
-					    	echo "<tr class='clickable-row' data-href='book.php/?bid=".$row[0]."'><td>".$row[1]."</td>";
-					    	echo "<td>".$row[2]."</td></tr>";
-					    }
+    					    while ($row=mysqli_fetch_row($result))
+    					    {
+    					    	echo "<tr class='clickable-row' data-href='book.php/?bid=".$row[0]."'><td>".$row[1]."</td>";
+                    echo "<td>".$row[2]."</td>";
+                    if($row[3] == 0) {
+                      echo "<td>Not available</td></tr>";
+                    } 
+                    if($row[3] == 1) {
+                      echo "<td>Available</td></tr>";
+                    }
+    					    }
+              }
 				?>
 			    </tbody>
 			  </table>

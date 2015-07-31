@@ -55,21 +55,42 @@
         <br>
         <div class="list-group">
         <table class="table table-hover">
-        		<caption>Recently added books</caption>
-			    <tbody>
-			      	<?php	include_once("templates/db_conx.php");
-						$sql_temp = "SELECT book_id, book_name, author_name FROM books WHERE available = 1 LIMIT 20";
-					    $result = mysqli_query($db_conx, $sql_temp);
+            <caption>Recently added books</caption>
+          <tbody>
+              <?php include_once("templates/db_conx.php");
+            $sql_temp = "SELECT book_id, book_name, author_name FROM books WHERE available = 1 LIMIT 10";
+              $result = mysqli_query($db_conx, $sql_temp);
 
-					    while ($row=mysqli_fetch_row($result))
-					    {
-					    	echo "<tr class='clickable-row' data-href='book.php/?bid=".$row[0]."'><td>".$row[1]."</td>";
-					    	echo "<td>".$row[2]."</td></tr>";
-					    }
-				?>
-			    </tbody>
-			  </table>
-		<div>
+              while ($row=mysqli_fetch_row($result))
+              {
+                echo "<tr class='clickable-row' data-href='book.php/?bid=".$row[0]."'><td>".$row[1]."</td>";
+                echo "<td>".$row[2]."</td></tr>";
+              }
+        ?>
+          </tbody>
+        </table>
+    <div>
+      
+      <br><br>
+        <div class="list-group">
+        <table class="table table-hover">
+            <caption>My books</caption>
+          <tbody>
+              <?php include_once("templates/db_conx.php");
+            $sql_temp = "SELECT book_id, book_name, author_name FROM books WHERE user_id = ".$_SESSION['user_id']." LIMIT 20";
+              $result = mysqli_query($db_conx, $sql_temp);
+
+              while ($row=mysqli_fetch_row($result))
+              {
+                echo "<tr class='clickable-row' data-href='book.php/?bid=".$row[0]."'><td>".$row[1]."</td>";
+                echo "<td>".$row[2]."</td></tr>";
+              }
+        ?>
+          </tbody>
+        </table>
+    <div>
+        
+      <br><br>
             </div>
     </div>
   </body>
