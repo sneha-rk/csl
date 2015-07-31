@@ -1,3 +1,11 @@
+<?php 
+    if(isset($_GET['submit'])) {
+        if(isset($_GET['text'])) {
+            $key = $_GET['text'];
+            header('Location: /share.php/?search='.$key);
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,23 +13,30 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
         .navbar{
-            height:70px;
-            padding-top:5px;
+            }
+        .navbar-xs {}
+        .btn-1 {
+            border: none;
         }
-        .navbar-xs { min-height:60px; height: 60px; }
         .navbar-xs .navbar-nav > li > a {  padding-top: 5px; padding-bottom: 5px; line-height: 50px; }
         .input-mysize {   
-           height: 15px;
-           font-size: 15px;
-           line-height: 20px;
+           height: 10px;
+           font-size: 10px;
+           line-height: 10px;
            width: 250px;
         }
         .white {
             color: gray;
         }
+        .dropdown-menu1 {
+            width: 200px !important;
+        }
     </style>
 </head>
 <body>
+     <!-- min-height:60px; height: 60px; height:70px;
+            padding-top:5px;
+        }-->
 <nav class="navbar navbar-xs navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,19 +61,42 @@
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                     </ul>
+
+                    <form class="navbar-form" role="search" method="get" id="search-form" name="search-form">
+                                <div class="btn-group pull-left" style="margin-right:10px;">
+                                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Mumbai <span class="caret"></span></a>
+                                        <div class="dropdown-menu multi">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <ul class="dropdown-menu"><li><a href="#"><strong>Mumbai</strong></a></li></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="2 BHK Flat, Pune Real Estate, Pest Control..." id="query" name="query" value="">
+                                        <div class="input-group-btn">
+                                    <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                                    </div>
+                                </div>
+                            </form>
                 </li> -->
             </ul>
             <!-- THIS IS THE SEARCH FUNCTION-->
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search for a book">
+            <form class="navbar-form navbar-left" role="search" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for book..." id="query" name="query" value="">
+                    <div class="input-group-btn">
+                    <button type="submit" class="btn btn-1" style="display:hide"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
                 </div>
-                <span class="glyphicon glyphicon-search white"></span>
             </form>
             <ul class="nav navbar-nav navbar-right input-mysize">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['user_name']; ?><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['user_name'].'<span class="caret"></span>'; ?></a>
+                    <ul class="dropdown-menu dropdown-menu1">
                         <li><a href="#">Settings <span class="glyphicon glyphicon-cog pull-right white"></span></a></li>
                         <li><a href="index.php?logout">Logout<span class="glyphicon glyphicon-log-out pull-right white"></span></a></li>
                     </ul>
